@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:landing-page": "node dist/landing-page/server/server.mjs"
+    "serve:ssr:landing-page": "node dist/landing-page/server/server.mjs",
+    "start:all": "concurrently \"npm run start\" \"npm run start:backend\"",
+    "start:backend": "cd ../backend && npm run dev"
   },
   "private": true,
   "dependencies": {
@@ -20,7 +22,9 @@
     "@angular/platform-server": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@angular/ssr": "^19.2.13",
+    "axios": "^1.12.2",
     "express": "^4.18.2",
+    "gsap": "^3.13.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

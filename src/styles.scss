@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #2a004f, #6b48ff);
+    /* même fond que landing */
+    overflow-x: hidden;
+    /* empêche le scroll horizontal */
+}
+
+/* Optionnel : pour tous les éléments */
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}

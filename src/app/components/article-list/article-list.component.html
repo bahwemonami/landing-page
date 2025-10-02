@@ -1,0 +1,12 @@
+<div class="articles-container">
+    <h2 class="articles-title">Nos Packs de Leads et Solutions</h2>
+    <div class="articles-grid">
+        <div *ngFor="let article of articles" class="article-card" (click)="selectArticle(article.id)">
+            <h3>{{ article.name }}</h3>
+            <p>{{ article.description }}</p>
+            <p class="price">{{ (article.price / 100).toFixed(2) }}€</p>
+            <button class="select-button">Sélectionner</button>
+        </div>
+    </div>
+    <button *ngIf="selectedArticle" class="cta-button" (click)="navigateToPayment()">Passer au Paiement</button>
+</div>

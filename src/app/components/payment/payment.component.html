@@ -1,0 +1,11 @@
+<div class="payment-container">
+    <h2 class="payment-title">Finalisation du Paiement</h2>
+    <div class="payment-details" *ngIf="article">
+        <h3>{{ article.name }}</h3>
+        <p>{{ article.description }}</p>
+        <p class="price">{{ (article.price / 100).toFixed(2) }}€</p>
+    </div>
+    <button class="pay-button" *ngIf="paymentUrl" (click)="openPayment()">Payer Maintenant</button>
+    <p class="loading" *ngIf="loading">Création du paiement...</p>
+    <p class="error" *ngIf="error">{{ error }}</p>
+</div>

@@ -1,0 +1,70 @@
+<div class="confirmation-container">
+  <div class="confirmation-card">
+    <div class="header">
+      <h1>Confirmation de Commande</h1>
+      <p class="order-id" *ngIf="orderId">Commande #{{ orderId }}</p>
+    </div>
+
+    <div class="status-section" *ngIf="!loading && !error">
+      <div class="status-indicator" [ngClass]="getStatusClass()">
+        <div class="spinner" *ngIf="paymentStatus === 'pending'"></div>
+        <div class="status-icon" *ngIf="paymentStatus !== 'pending'">
+          <span *ngIf="paymentStatus === 'confirmed' || paymentStatus === 'completed'">✅</span>
+          <span *ngIf="paymentStatus === 'failed' || paymentStatus === 'cancelled'">❌</span>
+        </div>
+      </div>
+      
+      <p class="status-message" [ngClass]="getStatusClass()">
+        {{ getStatusMessage() }}
+      </p>
+
+      <div class="payment-details" *ngIf="paymentData">
+        <div class="detail-item" *ngIf="paymentData.amount">
+          <span class="label">Montant:</span>
+          <span class="value">{{ (paymentData.amount / 100) | currency:'EUR':'symbol':'1.2-2' }}</span>
+        </div>
+        <div class="detail-item" *ngIf="paymentData.paymentId">
+          <span class="label">ID Paiement:</span>
+          <span class="value">{{ paymentData.paymentId }}</span>
+        </div>
+        <div class="detail-item" *ngIf="paymentData.createdAt">
+          <span class="label">Date:</span>
+          <span class="value">{{ paymentData.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading-section" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Vérification du statut de votre paiement...</p>
+    </div>
+
+    <div class="error-section" *ngIf="error">
+      <div class="error-icon">⚠️</div>
+      <p class="error-message">{{ error }}</p>
+    </div>
+
+    <div class="actions">
+      <button 
+        class="btn btn-primary" 
+        (click)="goToHome()"
+        *ngIf="paymentStatus === 'confirmed' || paymentStatus === 'completed'">
+        Retour à l'accueil
+      </button>
+      
+      <button 
+        class="btn btn-secondary" 
+        (click)="retryPayment()"
+        *ngIf="paymentStatus === 'failed' || paymentStatus === 'cancelled'">
+        Réessayer le paiement
+      </button>
+      
+      <button 
+        class="btn btn-outline" 
+        (click)="goToHome()"
+        *ngIf="paymentStatus === 'pending'">
+        Retour à l'accueil
+      </button>
+    </div>
+  </div>
+</div>
