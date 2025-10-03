@@ -14,7 +14,9 @@ import { gsap } from 'gsap';
 })
 export class ArticleListComponent implements OnInit {
   articles: { id: string; name: string; description: string; price: number }[] = [];
+  allArticles: { id: string; name: string; description: string; price: number }[] = [];
   selectedArticle: { id: string; name: string; description: string; price: number } | null = null;
+  currentFilter: string = 'all';
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -23,6 +25,7 @@ export class ArticleListComponent implements OnInit {
     this.http.get<any[]>(`${environment.apiUrl}/articles`).subscribe({
       next: (data) => {
         this.articles = data;
+        this.allArticles = data;
         this.animateArticles();
       },
       error: (err) => console.error('Erreur chargement articles:', err)
@@ -34,6 +37,30 @@ export class ArticleListComponent implements OnInit {
       opacity: 0,
       ease: 'power3.out'
     });
+  }
+
+  filterBy(category: string) {
+    this.currentFilter = category;
+    
+    if (category === 'all') {
+      this.articles = this.allArticles;
+    } else {
+      this.articles = this.allArticles.filter(article => 
+        article.name.toLowerCase().includes(category.toLowerCase())
+      );
+    }
+    
+    gsap.fromTo('.article-card',
+      { opacity: 0, y: 20, scale: 0.95 },
+      {
+        duration: 0.5,
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        stagger: 0.1,
+        ease: 'back.out(1.7)'
+      }
+    );
   }
 
   animateArticles() {

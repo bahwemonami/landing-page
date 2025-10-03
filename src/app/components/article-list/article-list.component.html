@@ -5,6 +5,33 @@
         <p class="articles-subtitle">Des solutions adaptées à chaque besoin et chaque budget</p>
     </div>
 
+    <div class="filters-bar">
+        <button class="filter-btn" [class.active]="currentFilter === 'all'" (click)="filterBy('all')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            </svg>
+            Tous
+        </button>
+        <button class="filter-btn" [class.active]="currentFilter === 'starter'" (click)="filterBy('starter')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+            </svg>
+            Starter
+        </button>
+        <button class="filter-btn" [class.active]="currentFilter === 'pro'" (click)="filterBy('pro')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            Pro
+        </button>
+        <button class="filter-btn" [class.active]="currentFilter === 'enterprise'" (click)="filterBy('enterprise')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            </svg>
+            Enterprise
+        </button>
+    </div>
+
     <div class="articles-grid">
         <article *ngFor="let article of articles; let i = index"
                  class="article-card"

@@ -50,6 +50,67 @@
     }
 }
 
+.filters-bar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0 auto 3rem;
+    flex-wrap: wrap;
+    max-width: 800px;
+
+    .filter-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.938rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+
+        svg {
+            width: 16px;
+            height: 16px;
+            transition: all 0.3s;
+        }
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(16, 185, 129, 0.5);
+            color: #10B981;
+            transform: translateY(-2px);
+
+            svg {
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        &.active {
+            background: linear-gradient(135deg, #10B981, #059669);
+            border-color: #10B981;
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+
+            svg {
+                transform: scale(1.1);
+            }
+        }
+
+        &:focus-visible {
+            outline: 2px solid #10B981;
+            outline-offset: 2px;
+        }
+    }
+}
+
 .articles-grid {
     position: relative;
     z-index: 1;
