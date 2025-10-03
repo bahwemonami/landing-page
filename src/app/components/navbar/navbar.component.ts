@@ -1,18 +1,24 @@
-import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+  
   isMenuOpen = false;
   isDarkMode = false;
+  isSearchOpen = false;
+  isUserDropdownOpen = false;
+  searchQuery = '';
   private scrollY = 0;
 
   ngOnInit() {
@@ -187,6 +193,70 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         scale: 1,
         rotation: 0,
         ease: 'power2.out'
+      });
+    }
+  }
+
+  toggleSearch() {
+    this.isSearchOpen = !this.isSearchOpen;
+    
+    if (this.isSearchOpen) {
+      setTimeout(() => {
+        this.searchInput?.nativeElement.focus();
+      }, 100);
+      
+      gsap.to('.search-input', {
+        duration: 0.3,
+        width: '200px',
+        opacity: 1,
+        ease: 'power2.out'
+      });
+    } else {
+      gsap.to('.search-input', {
+        duration: 0.3,
+        width: '0',
+        opacity: 0,
+        ease: 'power2.in'
+      });
+    }
+  }
+
+  performSearch() {
+    if (this.searchQuery.trim()) {
+      console.log('Recherche:', this.searchQuery);
+    }
+  }
+
+  toggleUserDropdown() {
+    this.isUserDropdownOpen = !this.isUserDropdownOpen;
+    
+    if (this.isUserDropdownOpen) {
+      gsap.fromTo('.dropdown-menu',
+        { opacity: 0, y: -10, scale: 0.95 },
+        { 
+          duration: 0.3,
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          ease: 'back.out(1.7)'
+        }
+      );
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    if (this.isUserDropdownOpen && !target.closest('.user-dropdown')) {
+      this.isUserDropdownOpen = false;
+    }
+    if (this.isSearchOpen && !target.closest('.search-bar')) {
+      this.isSearchOpen = false;
+      gsap.to('.search-input', {
+        duration: 0.3,
+        width: '0',
+        opacity: 0,
+        ease: 'power2.in'
       });
     }
   }
