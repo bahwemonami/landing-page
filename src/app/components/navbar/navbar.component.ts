@@ -1,50 +1,204 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit {
   isMenuOpen = false;
+  isDarkMode = false;
+  private scrollY = 0;
 
   ngOnInit() {
-    // Animation d'entrée de la navbar
     gsap.from('.navbar', {
-      duration: 1,
-      y: -50,
+      duration: 0.8,
+      y: -100,
       opacity: 0,
       ease: 'power3.out'
     });
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      this.isDarkMode = true;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.setupLogoAnimation();
+    this.setupScrollAnimation();
+  }
+
+  private setupLogoAnimation() {
+    const logo = document.querySelector('.logo') as HTMLElement;
+    if (logo) {
+      logo.addEventListener('mouseenter', () => {
+        gsap.to(logo, {
+          duration: 0.4,
+          scale: 1.05,
+          ease: 'power2.out'
+        });
+      });
+
+      logo.addEventListener('mouseleave', () => {
+        gsap.to(logo, {
+          duration: 0.4,
+          scale: 1,
+          ease: 'power2.out'
+        });
+      });
+    }
+  }
+
+  private setupScrollAnimation() {
+    const navbar = document.querySelector('.navbar') as HTMLElement;
+    if (navbar) {
+      window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+
+        if (window.innerWidth > 768) {
+          const parallaxOffset = currentScrollY * 0.3;
+          gsap.to(navbar, {
+            duration: 0.3,
+            y: -parallaxOffset * 0.2,
+            ease: 'power1.out'
+          });
+        }
+
+        this.scrollY = currentScrollY;
+      });
+    }
   }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
     const navLinks = document.querySelector('.nav-links') as HTMLElement;
+    const menuIcon = document.querySelector('.menu-icon') as HTMLElement;
+
     if (this.isMenuOpen) {
-      gsap.to(navLinks, { duration: 0.5, height: 'auto', opacity: 1, display: 'flex' });
+      gsap.fromTo(
+        navLinks,
+        { opacity: 0, y: -20 },
+        {
+          duration: 0.4,
+          opacity: 1,
+          y: 0,
+          ease: 'power2.out'
+        }
+      );
+
+      gsap.to(menuIcon, {
+        duration: 0.3,
+        rotation: 180,
+        ease: 'power2.inOut'
+      });
     } else {
-      gsap.to(navLinks, { duration: 0.5, height: 0, opacity: 0, display: 'none' });
+      gsap.to(navLinks, {
+        duration: 0.3,
+        opacity: 0,
+        y: -10,
+        ease: 'power2.in'
+      });
+
+      gsap.to(menuIcon, {
+        duration: 0.3,
+        rotation: 0,
+        ease: 'power2.inOut'
+      });
     }
+  }
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+
+    const navbar = document.querySelector('.navbar') as HTMLElement;
+    const darkModeToggle = document.querySelector('.dark-mode-toggle') as HTMLElement;
+
+    gsap.to(darkModeToggle, {
+      duration: 0.3,
+      rotation: this.isDarkMode ? 360 : 0,
+      scale: 1.2,
+      ease: 'back.out(1.7)',
+      onComplete: () => {
+        gsap.to(darkModeToggle, {
+          duration: 0.2,
+          scale: 1,
+          ease: 'power2.out'
+        });
+      }
+    });
+
+    gsap.to(navbar, {
+      duration: 0.5,
+      backgroundColor: this.isDarkMode ? '#0F172A' : 'transparent',
+      ease: 'power2.out'
+    });
   }
 
   animateLink(event: MouseEvent) {
     const link = event.target as HTMLElement;
-    gsap.to(link, { duration: 0.3, scale: 1.1, color: '#10B981', ease: 'power1.out' });
+    const icon = link.querySelector('.nav-icon') as HTMLElement;
+
+    gsap.to(link, {
+      duration: 0.3,
+      y: -3,
+      color: '#10B981',
+      ease: 'power2.out'
+    });
+
+    if (icon) {
+      gsap.to(icon, {
+        duration: 0.3,
+        scale: 1.15,
+        rotation: 5,
+        ease: 'back.out(1.7)'
+      });
+    }
   }
 
   resetLink(event: MouseEvent) {
     const link = event.target as HTMLElement;
-    gsap.to(link, { duration: 0.3, scale: 1, color: '#FFFFFF', ease: 'power1.out' });
+    const icon = link.querySelector('.nav-icon') as HTMLElement;
+
+    if (!link.classList.contains('active')) {
+      gsap.to(link, {
+        duration: 0.3,
+        y: 0,
+        color: '#FFFFFF',
+        ease: 'power2.out'
+      });
+    }
+
+    if (icon) {
+      gsap.to(icon, {
+        duration: 0.3,
+        scale: 1,
+        rotation: 0,
+        ease: 'power2.out'
+      });
+    }
   }
 
-  ngAfterViewInit() {
-    const logo = document.querySelector('.logo') as HTMLElement;
-    logo.addEventListener('mouseenter', () => gsap.to(logo, { duration: 0.3, scale: 1.05, ease: 'power1.out' }));
-    logo.addEventListener('mouseleave', () => gsap.to(logo, { duration: 0.3, scale: 1, ease: 'power1.out' }));
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth > 768 && this.isMenuOpen) {
+      this.isMenuOpen = false;
+      const navLinks = document.querySelector('.nav-links') as HTMLElement;
+      if (navLinks) {
+        navLinks.style.display = '';
+      }
+    }
   }
 }
