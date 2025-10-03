@@ -1,19 +1,23 @@
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-    box-sizing: border-box;
-    background: linear-gradient(135deg, #2a004f, #6b48ff);
-    /* même fond que landing */
-    overflow-x: hidden;
-    /* empêche le scroll horizontal */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap');
+
+:root {
+    --primary-blue: #2563EB;
+    --accent-violet: #7C3AED;
+    --success-green: #10B981;
+    --text-dark: #1F2937;
+    --bg-light: #F3F4F6;
+    --bg-dark: #111827;
 }
 
-/* Optionnel : pour tous les éléments */
-*,
-*::before,
-*::after {
-    box-sizing: inherit;
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-violet));
 }
+
+h1,
+h2,
+h3 {
+    font-family: 'Poppins', sans-serif;
+}
+

@@ -1,9 +1,21 @@
 <nav class="navbar">
-    <div class="logo">WEBNOVA LEADS</div>
+    <div class="logo flex items-center space-x-2">
+        <span
+            class="text-2xl font-bold bg-gradient-to-r from-primary-blue to-accent-violet bg-clip-text text-transparent">WEBNOVA
+            LEADS</span>
+        <span class="text-sm text-white opacity-80">Leads Qualifiés</span>
+    </div>
     <ul class="nav-links">
-        <li><a routerLink="/" routerLinkActive="active">Accueil</a></li>
-        <li><a routerLink="/articles" routerLinkActive="active">Packs</a></li>
-        <li><a href="mailto:contact@profilmetal.eu">Contact</a></li>
+        <li><a routerLink="/" routerLinkActive="active" class="nav-link" (mouseenter)="animateLink($event)"
+                (mouseleave)="resetLink($event)">Accueil</a></li>
+        <li><a routerLink="/articles" routerLinkActive="active" class="nav-link" (mouseenter)="animateLink($event)"
+                (mouseleave)="resetLink($event)">Packs</a></li>
+        <li><a routerLink="/" routerLinkActive="active" class="nav-link" (mouseenter)="animateLink($event)"
+                (mouseleave)="resetLink($event)">Contact</a></li>
     </ul>
     <div class="menu-toggle" (click)="toggleMenu()">☰</div>
 </nav>
+
+<!-- <li><a routerLink="/" routerLinkActive="active">Accueil</a></li>
+<li><a routerLink="/articles" routerLinkActive="active">Packs</a></li>
+<li><a href="mailto:contact@profilmetal.eu">Contact</a></li> -->
