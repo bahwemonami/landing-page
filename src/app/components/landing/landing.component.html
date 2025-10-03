@@ -1,46 +1,110 @@
 <div class="landing-container">
     <div class="hero-overlay"></div>
-    <div class="content">
-        <h1 class="title">Propulsez Votre Business avec des Leads Qualifiés</h1>
-        <p class="subtitle">Automatisez la génération de leads, ciblez précisément et boostez vos ventes avec nos outils
-            IT innovants.</p>
-        <button class="cta-button" (click)="navigateToArticles()">Découvrez Nos Packs</button>
-    </div>
-    <hr class="section-divider">
-    <div class="why-us-section">
-        <h2 class="why-us-title">Pourquoi Choisir WebNova Leads ?</h2>
-        <div class="why-us-grid">
-            <div class="why-us-item">
-                <div class="icon-wrapper">
-                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                    </svg>
-                </div>
-                <h3>Leads Ciblés</h3>
-                <p>Accédez à des prospects qualifiés adaptés à votre secteur.</p>
+    <div class="particles-bg"></div>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                </svg>
+                <span>Solution IT Innovante</span>
             </div>
-            <div class="why-us-item">
-                <div class="icon-wrapper">
-                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+
+            <h1 class="hero-title">
+                Propulsez Votre Business<br>
+                <span class="gradient-highlight">avec des Leads Qualifiés</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Automatisez la génération de leads, ciblez précisément et boostez vos ventes
+                avec nos outils IT de nouvelle génération. Transformez votre prospection dès aujourd'hui.
+            </p>
+
+            <div class="hero-cta-group">
+                <button class="cta-button primary" (click)="navigateToArticles()">
+                    <span>Découvrez Nos Packs</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
-                </div>
-                <h3>Automatisation Avancée</h3>
-                <p>Scraper et outils pour générer des leads en autopilot.</p>
+                </button>
+                <button class="cta-button secondary" (click)="scrollToFeatures()">
+                    <span>En Savoir Plus</span>
+                </button>
             </div>
-            <div class="why-us-item">
-                <div class="icon-wrapper">
-                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zm-10-7h3v3h-3zm0-1h3V7h-3zm6-3h-3v1h3zm0 2h-3v1h3zm0 2h-3v1h3zm-3 2h3v1h-3zm0 2h3v1h-3z" />
-                    </svg>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">2500+</div>
+                    <div class="stat-label">Leads Générés</div>
                 </div>
-                <h3>Soutien 24/7</h3>
-                <p>Assistance dédiée pour maximiser vos résultats.</p>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Taux de Satisfaction</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support Dédié</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="scroll-down">↓ Découvrez plus ↓</div>
+
+        <div class="scroll-indicator">
+            <div class="scroll-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+            </div>
+            <span>Découvrez Plus</span>
+        </div>
+    </section>
+
+    <section class="why-us-section" id="features">
+        <div class="section-header">
+            <span class="section-badge">Nos Avantages</span>
+            <h2 class="section-title">Pourquoi Choisir WebNova Leads ?</h2>
+            <p class="section-description">
+                Des solutions complètes pour transformer votre génération de leads
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <article class="feature-card" *ngFor="let feature of features; let i = index">
+                <div class="feature-icon" [style.background]="feature.color">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path [attr.d]="feature.iconPath"></path>
+                    </svg>
+                </div>
+                <h3 class="feature-title">{{ feature.title }}</h3>
+                <p class="feature-description">{{ feature.description }}</p>
+                <div class="feature-link">
+                    <span>En savoir plus</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">Prêt à Transformer Votre Business ?</h2>
+            <p class="cta-description">
+                Rejoignez des centaines d'entreprises qui ont déjà boosté leur génération de leads
+            </p>
+            <button class="cta-button-large" (click)="navigateToArticles()">
+                <span>Commencer Maintenant</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+        </div>
+    </section>
 </div>

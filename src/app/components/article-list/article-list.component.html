@@ -1,12 +1,49 @@
 <div class="articles-container">
-    <h2 class="articles-title">Nos Packs de Leads et Solutions</h2>
-    <div class="articles-grid">
-        <div *ngFor="let article of articles" class="article-card" (click)="selectArticle(article.id)">
-            <h3>{{ article.name }}</h3>
-            <p>{{ article.description }}</p>
-            <p class="price">{{ (article.price / 100).toFixed(2) }}€</p>
-            <button class="select-button">Sélectionner</button>
-        </div>
+    <div class="articles-header">
+        <span class="articles-badge">Nos Offres</span>
+        <h2 class="articles-title">Choisissez Votre Pack de Leads</h2>
+        <p class="articles-subtitle">Des solutions adaptées à chaque besoin et chaque budget</p>
     </div>
-    <button *ngIf="selectedArticle" class="cta-button" (click)="navigateToPayment()">Passer au Paiement</button>
+
+    <div class="articles-grid">
+        <article *ngFor="let article of articles; let i = index"
+                 class="article-card"
+                 [class.selected]="selectedArticle?.id === article.id"
+                 (click)="selectArticle(article.id)">
+            <div class="card-badge" *ngIf="i === 1">⭐ Populaire</div>
+            <div class="card-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                </svg>
+            </div>
+            <h3 class="card-title">{{ article.name }}</h3>
+            <p class="card-description">{{ article.description }}</p>
+            <div class="card-price">
+                <span class="price-amount">{{ (article.price / 100).toFixed(2) }}€</span>
+                <span class="price-label">/ mois</span>
+            </div>
+            <button class="select-button" [class.selected]="selectedArticle?.id === article.id">
+                <span>{{ selectedArticle?.id === article.id ? 'Sélectionné' : 'Sélectionner' }}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </button>
+        </article>
+    </div>
+
+    <div *ngIf="selectedArticle" class="payment-cta">
+        <p class="cta-message">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Vous avez sélectionné : <strong>{{ selectedArticle.name }}</strong>
+        </p>
+        <button class="cta-button" (click)="navigateToPayment()">
+            <span>Passer au Paiement</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </button>
+    </div>
 </div>

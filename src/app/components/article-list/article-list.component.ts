@@ -14,13 +14,12 @@ import { gsap } from 'gsap';
 })
 export class ArticleListComponent implements OnInit {
   articles: { id: string; name: string; description: string; price: number }[] = [];
-  selectedArticle: string | null = null;
+  selectedArticle: { id: string; name: string; description: string; price: number } | null = null;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
-    console.log('✅ ngOnInit - PaymentComponent démarré');
-    // Récupérer les articles depuis l'API backend
+    console.log('✅ ngOnInit - ArticleListComponent démarré');
     this.http.get<any[]>(`${environment.apiUrl}/articles`).subscribe({
       next: (data) => {
         this.articles = data;
@@ -29,7 +28,6 @@ export class ArticleListComponent implements OnInit {
       error: (err) => console.error('Erreur chargement articles:', err)
     });
 
-    // Animation initiale de la page
     gsap.from('.articles-container', {
       duration: 1,
       y: 50,
@@ -43,23 +41,24 @@ export class ArticleListComponent implements OnInit {
       duration: 1,
       y: 50,
       opacity: 0,
-      stagger: 0.2, // Décalage entre chaque carte
+      stagger: 0.2,
       ease: 'power3.out'
     });
   }
 
   selectArticle(articleId: string) {
-    this.selectedArticle = this.selectedArticle === articleId ? null : articleId;
+    const article = this.articles.find(a => a.id === articleId);
+    this.selectedArticle = this.selectedArticle?.id === articleId ? null : article || null;
     gsap.to(`.article-card[data-id="${articleId}"]`, {
       duration: 0.3,
-      scale: this.selectedArticle === articleId ? 1.05 : 1,
-      boxShadow: this.selectedArticle === articleId ? '0 10px 20px rgba(212, 164, 255, 0.5)' : 'none'
+      scale: this.selectedArticle?.id === articleId ? 1.05 : 1,
+      boxShadow: this.selectedArticle?.id === articleId ? '0 10px 20px rgba(212, 164, 255, 0.5)' : 'none'
     });
   }
 
   navigateToPayment() {
     if (this.selectedArticle) {
-      this.router.navigate(['/payment'], { queryParams: { articleId: this.selectedArticle } });
+      this.router.navigate(['/payment'], { queryParams: { articleId: this.selectedArticle.id } });
     }
   }
 }
